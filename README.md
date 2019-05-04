@@ -8,7 +8,7 @@ The driver sets up all the input and output pins required for accessing the
 analog sensors, and provides methods for reading both the analog and digital
 sensors.
 
-## Basic Usage
+# Basic Usage
 
 You will need to do the following to use this library:
 
@@ -19,7 +19,81 @@ You will need to do the following to use this library:
 Once these steps are complete, you may call any of the public methods to
 interact with the TSL Payload Board.
 
-# How to Store Your Data - The DataPacket `struct`
+## Example
+
+``` c++
+ #include "TSLPB.h"
+
+ TSLBP tslpb;
+ ThinsatPacket_t missionData;
+
+ void setup() {
+     tslpb.begin();
+ }
+
+ void loop() {
+     uint16_t tslVolts   = tslpb.readAnalogSensor(Voltage);
+     uint16_t tslCurrent = tslpb.readAnalogSensor(Current);
+     uint16_t tslTempExt = tslpb.readAnalogSensor(TempExt);
+
+     uint16_t tslDT1Raw  = tslpb.readTSLDigitalSensorRaw(DT1);
+     double   tslDT1C    = tslpb.readTSLDigitalSensor(DT1);
+
+     missionData.payloadData.solar = tslpb.readAnalogSensor(Solar);
+
+     while (!tslpb.isClearToSend())
+     {
+         delay(100);
+     }
+
+     tslpb.pushDataToNSL(missionData);
+ }
+
+```
+
+You probably noticed the "Voltage", "Current", etc arguments. The TSLPB
+driver has two enums that allow the client to call the read methods with
+human-readable code, and without worrying about keeping I2C addresses or
+managing low-level mux switching.
+
+
+
+### TSLPB_AnalogSensor_t
+
+Use `readAnalogSensor()` with any of the following values:
+
+* Solar   - The solar sensor
+* IR      - The infrared detector
+* TempInt - The TSLPB internal temperature sensor
+* TempExt - The TSLPB external temperature sensor
+* Current - The TSLPB power system, current sensor
+* Voltage - The TSLPB power system, voltage sensor
+
+### TSLPB_DigitalSensor_t
+
+Use `readDigitalSensor()` with any of the following values:
+
+* DT1               - The TSLPB LM75A DT1 Temperature Sensor
+* DT2               - The TSLPB LM75A DT2 Temperature Sensor
+* DT3               - The TSLPB LM75A DT3 Temperature Sensor
+* DT4               - The TSLPB LM75A DT4 Temperature Sensor
+* DT5               - The TSLPB LM75A DT5 Temperature Sensor
+* DT6               - The TSLPB LM75A DT6 Temperature Sensor
+* Accelerometer_x   - The TSLPB MPU-9250 Accelerometer x-axis
+* Accelerometer_y   - The TSLPB MPU-9250 Accelerometer y-axis
+* Accelerometer_z   - The TSLPB MPU-9250 Accelerometer z-axis
+* Gyroscope_x       - The TSLPB MPU-9250 Gyroscope x-axis
+* Gyroscope_y       - The TSLPB MPU-9250 Gyroscope y-axis
+* Gyroscope_z       - The TSLPB MPU-9250 Gyroscope z-axis
+* Magnetometer_x    - The TSLPB MPU-9250 Magnetometer x-axis
+* Magnetometer_y    - The TSLPB MPU-9250 Magnetometer y-axis
+* Magnetometer_z    - The TSLPB MPU-9250 Magnetometer z-axis
+* IMU_Internal_Temp - The TSLPB MPU-9250 Internal Temperature 
+
+
+# Advanced Usage
+
+## How to Store Your Data - The DataPacket `struct`
 
 The TSLPB uses a union of a byte array and a struct to allow you to store your 
 data in semantically relevant variables. For example, if you want to save
@@ -116,16 +190,16 @@ you add up the bytes used by each of your fields (excluding the header) it must 
 
 To help you, here is a handy chart of variable types and how much memory they use:
 
-| Type | Description | Size in Bytes |
-|------|-------------|---------------|
-bool   | True or False                     | 1
-byte   | Arbitrary Data                    | 1
-char   | A letter or symbol                | 1
-int    | An integer from -32,768 to 32,767 | 2
-uint   | An integer from 0 to 65,535       | 2
-long   | An integer from 2,147,483,648 to 2,147,483,647 | 4
-double | A floating point (decimal)        | 4
-float  | A floating point number (decimal) | 4
+| Type | Description                                        | Size in Bytes |
+|------|----------------------------------------------------|---------------|
+bool   | True or False                                      | 1
+byte   | Arbitrary Data                                     | 1
+char   | A letter or symbol                                 | 1
+int    | An integer from -32,768 to 32,767                  | 2
+uint   | An integer from 0 to 65,535                        | 2
+long   | An integer from 2,147,483,648 to 2,147,483,647     | 4
+double | A floating point (decimal)                         | 4
+float  | A floating point number (decimal)                  | 4
 
 If you have a temperature that you want to represent as a number with a decimal point,
 you might want to use a float. You would add a line *after* the `char header[NSL_HEADER_LENGTH];` line
@@ -141,43 +215,4 @@ Once you have added all your data fields, double check that the byte total adds 
 
 
 
-### Example
 
-``` c++
- #include "TSLPB.h"
-
- TSLBP tslpb;
- ThinsatPacket_t missionData;
-
- void setup() {
-     tslpb.begin();
- }
-
- void loop() {
-     uint16_t tslVolts   = tslpb.readAnalogSensor(Voltage);
-     uint16_t tslCurrent = tslpb.readAnalogSensor(Current);
-     uint16_t tslTempExt = tslpb.readAnalogSensor(TempExt);
-
-     uint16_t tslDT1Raw  = tslpb.readTSLDigitalSensorRaw(DT1);
-     double   tslDT1C    = tslpb.readTSLDigitalSensor(DT1);
-
-     missionData.payloadData.solar = tslpb.readAnalogSensor(Solar);
-
-     while (!tslpb.isClearToSend())
-     {
-         delay(100);
-     }
-
-     tslpb.pushDataToNSL(missionData);
- }
-
-```
-
- You probably noticed the "Voltage", "Current", etc arguments. The TSLPB
- driver has two enums that allow the client to call the read methods with
- human-readable code, and without worrying about keeping I2C addresses or
- managing low-level mux switching.
-
- - ::TSLPB_AnalogSensor_t
- - ::TSLPB_DigitalSensor_t
- 

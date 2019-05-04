@@ -3,7 +3,7 @@
  *
  *  @author 	Nicholas Counts
  *
- *	@version 	0.3.0
+ *	@version 	0.4.0
  *
  *  @date   	06/12/18
  *

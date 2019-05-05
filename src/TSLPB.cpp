@@ -348,12 +348,10 @@ bool TSLPB::read16bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, 
     uint8_t result;
     
     Wire.beginTransmission(i2cAddress); // Start with address
-    Wire.write(reg);                // Set temperature register
-    //    Wire.endTransmission();   // Discard succeed/fail status
+    Wire.write(reg);                    // Set temperature register
+    Wire.endTransmission();             // Discard succeed/fail status
     
     uint8_t bytesRead = Wire.requestFrom(i2cAddress, 2);
-
-    Wire.endTransmission();
     
     uint8_t part1 = Wire.read();
     uint8_t part2 = Wire.read();

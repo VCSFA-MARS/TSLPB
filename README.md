@@ -1,12 +1,21 @@
 
 # Twiggs Space Lab Payload Board Driver
 
-TSLPB is a driver class that can be instantiated and used to access the
-sensors and devices on the TSLPB V3 for the [ThinSat Program.](http://vaspace.org/index.php/thinsat-program)
+TSLPB is a driver class that can be used to access the sensors and devices
+on the TSLPB V3 for the [ThinSat Program.](http://vaspace.org/index.php/thinsat-program)
 
 The driver sets up all the input and output pins required for accessing the
 analog sensors, and provides methods for reading both the analog and digital
 sensors.
+
+## Usage Guides and Documentation
+
+For more detailed information about the hardware and software, look in the `extras`
+folder for .pdf files containing the TSLPB and NSL ICDs, as well as some more 
+in-depth technical information about this library.
+
+The [TSLPB Wiki](https://github.com/VCSFA-MARS/TSLPB/wiki) as another good reference for getting started and understanding
+the TSLPB library functions.
 
 # Basic Usage
 

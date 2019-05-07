@@ -3,6 +3,8 @@
  *
  *  @author Nicholas Counts
  *
+ *  @version     0.5.0
+ *
  *  @date   06/12/18
  *
  *  @brief  Function prototypes, includes, and definitions for TSLPB Arduino

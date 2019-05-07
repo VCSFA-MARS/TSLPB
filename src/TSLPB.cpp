@@ -245,6 +245,7 @@ double  TSLPB::readDigitalSensor(TSLPB_DigitalSensor_t sensorName)
             break;
             
         default:
+            return regContents;
             break;
     }
     

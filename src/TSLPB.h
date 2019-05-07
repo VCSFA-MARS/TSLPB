@@ -3,6 +3,8 @@
  *
  *  @author Nicholas Counts
  *
+ *  @version     0.5.0
+ *
  *  @date   06/12/18
  *
  *  @brief  Function prototypes, includes, and definitions for TSLPB Arduino
@@ -144,25 +146,23 @@ public:
     TSLPB();
     void begin();
     
+    SoftwareSerial NSLbus;                  ///< NSL Software Serial bus object
+    bool    pushDataToNSL(ThinsatPacket_t data);
+ 
     uint16_t readAnalogSensor(TSLPB_AnalogSensor_t sensorName);
-    
     double   readDigitalSensor(TSLPB_DigitalSensor_t sensor);
     uint16_t readDigitalSensorRaw(TSLPB_DigitalSensor_t sensor);
     
     void    sleepUntilClearToSend();   // NOT IMPLEMENTED
     bool    isClearToSend();
-    bool    pushDataToNSL(ThinsatPacket_t data);
-    
-    uint8_t read8bitRegister (TSLPB_I2CAddress_t i2cAddress, const uint8_t reg);
     
     bool    isMagnetometerOverflow = false; ///< Overflow status of magnetometer registers
-
-    SoftwareSerial NSLbus;                  ///< NSL Software Serial bus object
     
 private:
     
     bool    read16bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, uint16_t& response);
     bool    write8bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, uint8_t data);
+    uint8_t read8bitRegister (TSLPB_I2CAddress_t i2cAddress, const uint8_t reg);
     void    InitTSLAnalogSensors();
     void    InitTSLDigitalSensors();
     void    wakeOnSerialReady();

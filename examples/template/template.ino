@@ -9,7 +9,7 @@
                  Counts Engineering
 
     Date         05/02/18 5:56 PM
-    Version      0.5.1
+    Version      0.5.2
 
     Copyright    © Nicholas Counts, 2018
     Licence      MIT
@@ -39,7 +39,6 @@ ThinsatPacket_t data;
 void setup()
 {
     pb.begin();
-    Serial.begin(TSL_DIAGNOSTIC_BAUD);
 }
 
 void loop()
@@ -49,6 +48,7 @@ void loop()
     // Example: try to push data to NSL every 5 seconds
     
     if (pb.isClearToSend()) {
+        Serial.println("Clear To Send");
         pb.pushDataToNSL(data);
     }
 

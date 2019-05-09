@@ -16,7 +16,9 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+   /*
+    * 
+    */
   Serial.print(pb.readDigitalSensor(Accelerometer_x));
   Serial.print(",");
   Serial.print(pb.readDigitalSensor(Accelerometer_y));

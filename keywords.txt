@@ -13,6 +13,7 @@ UserDataStruct_t            KEYWORD1
 ThinsatPacket_t             KEYWORD1
 NSLPacket                   KEYWORD1
 payloadData                 KEYWORD1
+NSLbus						KEYWORD1
 
 
 #######################################

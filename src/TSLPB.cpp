@@ -382,10 +382,6 @@ void TSLPB::sleepWithWakeOnSerialReady() {
 
 
 
-
-
-
-
 void TSLPB::waitForMagReady()
 {
     uint32_t startTime = millis();
@@ -444,6 +440,33 @@ bool TSLPB::isClearToSend()
 
 
 
+
+uint8_t TSLPB::getMemByte(uint16_t reg)
+{
+    uint8_t regContents;
+    Wire.beginTransmission(MEM_ADDRESS);
+    Wire.write(highByte(reg));
+    Wire.write( lowByte(reg));
+    Wire.endTransmission();
+    Wire.requestFrom((uint8_t)MEM_ADDRESS, (uint8_t)1);
+    regContents = Wire.read();
+    return regContents;
+}
+
+
+void TSLPB::putMemByte(uint8_t data, uint16_t reg){
+    byte response = 0x00;
+    Wire.beginTransmission(MEM_ADDRESS);
+    response += Wire.write(highByte(reg));
+    response += Wire.write( lowByte(reg));
+    response += Wire.write(data);
+    Wire.endTransmission();
+    delay(5);
+    if (!response)
+    {
+        Serial.println("Error sending byte to EEPROM");
+    }
+}
 
 
 

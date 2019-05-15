@@ -155,7 +155,7 @@ public:
     uint16_t readDigitalSensorRaw(TSLPB_DigitalSensor_t sensor);
     
     uint8_t TSLPB::getMemByte(uint16_t reg);
-    void    TSLPB::putMemByte(uint8_t data, uint16_t reg);
+    void    TSLPB::putMemByte(uint16_t reg, uint8_t data);
 
     template<class TYPE> void TSLPB::readMemVar(word reg, TYPE& result) {
         const uint8_t n = sizeof(result); 
@@ -170,7 +170,7 @@ public:
         result = data.dt;
     };
 
-    template<class TYPE> void TSLPB::writeMemVar(TYPE varToWrite, word reg) {
+    template<class TYPE> void TSLPB::writeMemVar(word reg, TYPE varToWrite) {
         const uint8_t n = sizeof(varToWrite);
         union WriteUnion{
             TYPE  dt;

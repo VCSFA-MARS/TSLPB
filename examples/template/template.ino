@@ -16,18 +16,20 @@
 
 */
 
+/*  ┌──────────────────────────────────────────────────┐
+ *  │    Include Custom ThinSat DataPacket Structure   │
+ *  │                      NOTE:                       │
+ *  │      This must be done before including the      │
+ *  │                TSLPB Library header              │
+ *  └──────────────────────────────────────────────────┘ */
+
+// #include "myDataPacketStructure.h"
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │  Include Twiggs Space Lab Payload Board Library  │
  *  └──────────────────────────────────────────────────┘ */
 
 #include "TSLPB.h"
-
-/*  ┌──────────────────────────────────────────────────┐
- *  │    Include Custom ThinSat DataPacket Structure   │
- *  └──────────────────────────────────────────────────┘ */
-
-// #include "myDataPacketStructure.h"
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │   Instantiate Controller Classes and Variables   │

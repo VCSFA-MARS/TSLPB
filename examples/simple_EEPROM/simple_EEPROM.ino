@@ -63,10 +63,10 @@ void loop() {
   Serial.println("Example 1:\n--------------------------------------\n");
 
     Serial.print("Writing the first 4 EEPROM bytes with the following: 40 49 0f d0 ");
-    pb.putMemByte(0x40, 0);
-    pb.putMemByte(0x49, 1);
-    pb.putMemByte(0x0f, 2);
-    pb.putMemByte(0xd0, 3);
+    pb.putMemByte(0, 0x40);
+    pb.putMemByte(1, 0x49);
+    pb.putMemByte(2, 0x0f);
+    pb.putMemByte(3, 0xd0);
     
     Serial.println("\nReading the first 4 EEPROM registers:");
     printRegFromTo(0, 3);
@@ -118,7 +118,7 @@ void loop() {
     
     Serial.println("\nSaving <float> e to eeprom, starting at reg 4");
     float e = 2.718281828459045235;
-    pb.writeMemVar(e, 4);
+    pb.writeMemVar(4, e);
 
   /*
    * Using writeMemVar() makes it a breeze. The library handles all

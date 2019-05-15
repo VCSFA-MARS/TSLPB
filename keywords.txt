@@ -34,6 +34,8 @@ isClearToSend				KEYWORD2
 readMemVar					KEYWORD2
 getMemByte					KEYWORD2
 putMemByte					KEYWORD2
+readMemVar					KEYWORD2
+writeMemVar					KEYWORD2
 
 ######################################
 # Constants (LITERAL1)

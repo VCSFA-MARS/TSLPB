@@ -454,7 +454,7 @@ uint8_t TSLPB::getMemByte(uint16_t reg)
 }
 
 
-void TSLPB::putMemByte(uint8_t data, uint16_t reg){
+void TSLPB::putMemByte(uint16_t reg, uint8_t data){
     byte response = 0x00;
     Wire.beginTransmission(MEM_ADDRESS);
     response += Wire.write(highByte(reg));

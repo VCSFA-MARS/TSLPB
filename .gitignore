@@ -29,3 +29,7 @@
 
 # Mac OS X System Files
 .DS_Store
+
+# Doxygen output folders
+extras/doxy/html
+extras/doxy/latex

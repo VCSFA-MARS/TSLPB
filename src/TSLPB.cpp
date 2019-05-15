@@ -361,7 +361,12 @@ bool TSLPB::read16bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, 
     return true;
 }
 
-
+/*!
+ * @brief This function places the TSLPB into a low power sleep mode until the
+ * NSL "Mothership" signals that it is ready to receive data on the NSL Bus.
+ *
+ * @warning     This function is not implemented
+ */
 void TSLPB::sleepUntilClearToSend() { 
     
 }
@@ -403,6 +408,7 @@ void TSLPB::wakeOnSerialReady() { };
  * user data structure may be customized.
  *
  * @param[in]   data    A ThinsatPacket_t union.
+ * @param[out]  bool    Successfull transmission status
  *
  * @return      nominal transmission: true or false
  */
@@ -439,8 +445,14 @@ bool TSLPB::isClearToSend()
 }
 
 
-
-
+/*!
+ * @brief This function reads data from the TSLPB EEPROM chip. This is used to
+ * retrieve data from nonvolatile storage. One byte is read from the specified 
+ * register.
+ *
+ * @param[in]   reg     a two-byte (word) unsigned integer
+ * @returns     data    a single byte. May be signed, unsigned, char, etc.
+ */
 uint8_t TSLPB::getMemByte(uint16_t reg)
 {
     uint8_t regContents;
@@ -453,7 +465,17 @@ uint8_t TSLPB::getMemByte(uint16_t reg)
     return regContents;
 }
 
-
+/*!
+ * @brief This function writes data to the TSLPB EEPROM chip. This is used to
+ * store data in nonvolatile storage to allow persistance in the event of power
+ * loss. One byte is written to the specified register.
+ *
+ * @param[in]   reg     a two-byte (word) unsigned integer
+ * @param[in]   data    a single byte. May be signed, unsigned, char, etc.
+ *
+ * @note        This method will print an error message to the diagnostic
+ *              serial port if the write fails.
+ */
 void TSLPB::putMemByte(uint16_t reg, uint8_t data){
     byte response = 0x00;
     Wire.beginTransmission(MEM_ADDRESS);
@@ -480,17 +502,73 @@ void TSLPB::putMemByte(uint16_t reg, uint8_t data){
  *  analog sensors, and provides methods for reading both the analog and digital
  *  sensors.
  *
- * @section Basic Usage
+ *  @section usage Basic Usage
  *
  *  You will need to do the following to use this library:
- *      1. Include tslbp.h in your program.
+ *      1. Include TSLPB.h in your program.
  *      2. Instantiate a TSLPB object
  *      3. Run the TSLPB::begin() method
  *
  *  Once these steps are complete, you may call any of the public methods to
  *  interact with the TSL Payload Board.
  *
- * @subsection Example
+ *  @section install Installation
+ *
+ *  Installing the library is easy using the Arduino IDE, which can be
+ *  downloaded at https://www.arduino.cc/en/Main/Software
+ *
+ *  Once you have the Arduino IDE installed, use the menu and navigate to 
+ *  Sketch > Include Library > Manage Libraries...
+ *
+ *  This opens the Library Manager. Type "thinsat" into the search bar. Select
+ *  the library, and click "Install"
+ *
+ *  \image html library_manager.png
+ *  \image latex library_manager.png "Library Manager" width=6in
+ *
+ *  @subsection manual_install Manual Installation
+ *
+ *  You can always download the latest version of the library as a zip file from 
+ *  https://github.com/VCSFA-MARS/TSLPB/releases/latest
+ *
+ *  Then use the Sketch > Include Library > Add Zip Library... feature of the
+ *  Arduino IDE to install the library.
+ *
+ *  @section quickstart Getting Started
+ *
+ *  The TSLPB Library includes several sample sketches to help you get coding
+ *  and illustrate some of the features.
+ *
+ *  - EEPROM - read and write to the onboard memory chip
+ *  - i2c_scanner - find all I2C devices connected to the TSLPB
+ *  - serial_plot - example of reading the accelerometer with live ouput plot
+ *  - simple - a blank sketch with the library includes set up.
+ *  - template - a good starting point for developing your code
+ *  - VCSFA_ThinSat - an example of the VCSFA ThinSat flight software
+ *  .
+ *  
+ *  Open the serial_plot example in the Arduino IDE.
+ *  File > Examples > ThinSat Program TSLPB Library > serial_plot
+ *
+ *  Plug your programming cable into the TSLPB diagnostic connector. Set the
+ *  Arduino IDE port to use the programming cable with Tools > Port. Click the
+ *  "Upload" button, which looks like an arrow pointing right (->)
+ *
+ *  \image html serial_plot_sketch.png
+ *  \image latex serial_plot_sketch.png "Sketch compiled and uploaded" width=6in
+ *
+ *  The example sketch will compile and upload to the board. When the upload
+ *  completes, open the Serial Plotter (Tools > Serial Plotter) and set the
+ *  baud rate to 9600, which is the default baud rate for the TSLPB diagnostic
+ *  port.
+ *
+ *  The Serial Plotter will launch and begin graphing the values of the onboard
+ *  gyroscope. Try moving the board around and watch how the plot changes.
+ *
+ *  \image html serial_plotter.png
+ *  \image latex serial_plotter.png "Serial Plotter with Gyroscope data" width=6in
+ *
+ *  @subsection example Example
  *
  * @code
  *  #include "TSLPB.h"

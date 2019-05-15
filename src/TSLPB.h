@@ -157,6 +157,18 @@ public:
     uint8_t TSLPB::getMemByte(uint16_t reg);
     void    TSLPB::putMemByte(uint16_t reg, uint8_t data);
 
+    /*!
+     * @brief This function reads data from the TSLPB EEPROM chip. This is used to
+     * retrieve data from nonvolatile storage. The data argument will be filled 
+     * with data from the EEPROM interpreted as data's typedef.
+     *
+     * @param[in]   reg     a two-byte (word) unsigned integer
+     * @param[out]  data    any type is allowed. assigned a value by readMemVar()
+     *
+     * @note        This method will handle any data type and write the appropriate
+     *              number of registers on the EEPROM. Care must be taken to ensure
+     *              you start at the correct register.
+     */
     template<class TYPE> void TSLPB::readMemVar(word reg, TYPE& result) {
         const uint8_t n = sizeof(result); 
         union ReadUnion{
@@ -170,6 +182,18 @@ public:
         result = data.dt;
     };
 
+    /*!
+     * @brief This function writes data to the TSLPB EEPROM chip. This is used to
+     * store data in nonvolatile storage to allow persistance in the event of power
+     * loss. The entire contents of the data argument will be written to the EEPROM
+     *
+     * @param[in]   reg     a two-byte (word) unsigned integer
+     * @param[in]   data    any type is allowed.
+     *
+     * @note        This method will handle any data type and write the appropriate
+     *              number of registers on the EEPROM. Care must be taken to ensure
+     *              you do not overwrite existing data.
+     */
     template<class TYPE> void TSLPB::writeMemVar(word reg, TYPE varToWrite) {
         const uint8_t n = sizeof(varToWrite);
         union WriteUnion{

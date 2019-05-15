@@ -85,6 +85,7 @@ typedef enum
     DT6_ADDRESS = 0x4B,             ///< LM75A
     IMU_ADDRESS = 0x69,             ///< MPU-9250
     MAG_ADDRESS = 0x0C,             ///< MAGNETOMETER I2C Address (slave on the MPU-9250)
+    MEM_ADDRESS = 0x50,             ///< EEPROM I2C Address for the Microchip 24LC256
     
 } TSLPB_I2CAddress_t;
 
@@ -153,6 +154,36 @@ public:
     double   readDigitalSensor(TSLPB_DigitalSensor_t sensor);
     uint16_t readDigitalSensorRaw(TSLPB_DigitalSensor_t sensor);
     
+    uint8_t TSLPB::getMemByte(uint16_t reg);
+    void    TSLPB::putMemByte(uint16_t reg, uint8_t data);
+
+    template<class TYPE> void TSLPB::readMemVar(word reg, TYPE& result) {
+        const uint8_t n = sizeof(result); 
+        union ReadUnion{
+            TYPE  dt;
+            byte  b[n];
+        };
+        ReadUnion data;
+        for (uint8_t i = 0; i < n; i++) {
+            data.b[n - 1 - i] = TSLPB::getMemByte(reg + i);
+        }
+        result = data.dt;
+    };
+
+    template<class TYPE> void TSLPB::writeMemVar(word reg, TYPE varToWrite) {
+        const uint8_t n = sizeof(varToWrite);
+        union WriteUnion{
+            TYPE  dt;
+            byte  b[n];
+        };
+        WriteUnion data;
+        data.dt = varToWrite;
+        data.b[0] += 0x00;
+        for (uint8_t i = 0; i < n; i++) {
+            TSLPB::putMemByte(data.b[n - 1 - i], reg + i);
+        }
+    };
+
     void    sleepUntilClearToSend();   // NOT IMPLEMENTED
     bool    isClearToSend();
     

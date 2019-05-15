@@ -114,7 +114,7 @@ void loop() {
    * to take care of the dirty work for me?
    */
 
-  Serial.println("\n\nExample 3:\n--------------------------------------\n");
+  Serial.println("\nExample 3:\n--------------------------------------\n");
     
     Serial.println("\nSaving <float> e to eeprom, starting at reg 4");
     float e = 2.718281828459045235;
@@ -137,35 +137,65 @@ void loop() {
    * Naturally!
    */
 
-  Serial.println("\n\nExample 4:\n--------------------------------------\n");
+  Serial.println("\nExample 4:\n--------------------------------------\n");
     pb.readMemVar(4, newFloat);
     Serial.print("We read ");
     Serial.print(newFloat);
     Serial.println(" starting at register 4");
+
+    Serial.print("Reading hex from EEPROM: ");
+    for (int i = 0; i < sizeof(e); i++) {
+      Serial.print(pb.getMemByte(4 + i), HEX);
+    }
   
-  
-//  pb.writeMemVar(pi, reg);
+  /*
+   * Seems pretty easy. We couldn't possibly mess this up, could we?
+   * What if we start reading from the wrong register?
+   */
 
-  Serial.print("Reading hex from EEPROM: ");
-  for (int i = 0; i < sizeof(e); i++) {
-    Serial.print(pb.getMemByte(reg + i), HEX);
-  }
+  Serial.println("\nExample 5:\n--------------------------------------\n");
+    pb.readMemVar(2, newFloat);
+    Serial.print("We read ");
+    Serial.print(newFloat);
+    Serial.println(" starting at register 2");
 
-  Serial.println("\n\nReading Variable from EEPROM as a <float>: ");
-  newFloat;
-  pb.readMemVar(reg, newFloat);
-  Serial.println(newFloat);
+    Serial.print("Reading hex from EEPROM: ");
+    for (int i = 0; i < sizeof(e); i++) {
+      Serial.print(pb.getMemByte(2 + i), HEX);
+    }
 
+  /*
+   * Why did that come out with nonsense? The library doesn't know where
+   * you saved your data in the EEPROM chip, it only knows what type of
+   * data you are saving or requesting. 
+   *
+   * If you give it the wrong starting address, it will read the correct
+   * number of bytes and try to interpret them for your variable. 
+   * 
+   * Now I hear you thinking "ok, not too bad for reading, but what about
+   * when I save my variables?"
+   *
+   * YES! This is important - the library will happily overwrite your data!
+   * If you write a floating point (4 bytes long) to register 0, and then
+   * write another one starting at register 2, you will clobber half of your
+   * data, and there's no way to recover it.
+   *
+   * It's very important to make sure your data are all stored in registers
+   * that don't conflict. 
+   */
+
+
+Serial.println("\nExample 6:\n--------------------------------------\n");
+  Serial.println("Display the first 16 registers of EEPROM:");
   printRegFromTo(0, 15);
   
   do {
       delay(10000);
   } while (true);
   
-}
+} // End of void loop()
 
-
-
+ 
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │     Simple function to print EEPROM contents     │

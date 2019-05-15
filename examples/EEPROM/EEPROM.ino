@@ -9,9 +9,9 @@
                  Counts Engineering
 
     Date         05/14/18 3:45 PM
-    Version      0.5.2
+    Version      0.6.0
 
-    Copyright    © Nicholas Counts, 2018
+    Copyright    © Nicholas Counts, 2019
     Licence      MIT
 
 

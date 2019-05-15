@@ -16,12 +16,11 @@ void setup() {
 }
 
 void loop() {
-   /*
-    * 
-    */
+
   Serial.print(pb.readDigitalSensor(Accelerometer_x));
   Serial.print(",");
   Serial.print(pb.readDigitalSensor(Accelerometer_y));
   Serial.print(",");
   Serial.println(pb.readDigitalSensor(Accelerometer_z));
+
 }

@@ -9,25 +9,27 @@
                  Counts Engineering
 
     Date         05/02/18 5:56 PM
-    Version      0.5.2
+    Version      0.6.0
 
     Copyright    © Nicholas Counts, 2018
     Licence      MIT
 
 */
 
+/*  ┌──────────────────────────────────────────────────┐
+ *  │    Include Custom ThinSat DataPacket Structure   │
+ *  │                      NOTE:                       │
+ *  │      This must be done before including the      │
+ *  │                TSLPB Library header              │
+ *  └──────────────────────────────────────────────────┘ */
+
+// #include "myDataPacketStructure.h"
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │  Include Twiggs Space Lab Payload Board Library  │
  *  └──────────────────────────────────────────────────┘ */
 
 #include "TSLPB.h"
-
-/*  ┌──────────────────────────────────────────────────┐
- *  │    Include Custom ThinSat DataPacket Structure   │
- *  └──────────────────────────────────────────────────┘ */
-
-// #include "myDataPacketStructure.h"
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │   Instantiate Controller Classes and Variables   │

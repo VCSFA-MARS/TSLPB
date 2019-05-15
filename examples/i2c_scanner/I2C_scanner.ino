@@ -1,3 +1,5 @@
+#include "TSLPB.h"
+
 TSLPB pb;
 ThinsatPacket_t missionData;
 

@@ -31,7 +31,6 @@ sleepUntilClearToSend       KEYWORD2
 pushDataToNSL               KEYWORD2
 read8bitRegister            KEYWORD2
 isClearToSend				KEYWORD2
-readMemVar					KEYWORD2
 getMemByte					KEYWORD2
 putMemByte					KEYWORD2
 readMemVar					KEYWORD2

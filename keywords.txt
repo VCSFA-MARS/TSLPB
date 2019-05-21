@@ -73,6 +73,8 @@ TempInt 					LITERAL1
 TempExt 					LITERAL1
 Current 					LITERAL1
 Voltage 					LITERAL1
+Ground						LITERAL1
+PPS							LITERAL1
 
 ## LED Names (Enum) and States
 

@@ -366,7 +366,15 @@ bool TSLPB::read16bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, 
     return true;
 }
 
-
+/*!
+ * @brief This function controls the diagnostic LEDs on the TSLPB, available on
+ * boards starting at V.F2
+ *
+ * @param[in]   led     type TSLPB_LED_t, an enum of the LEDs
+ * @param[in]   state   type bool, or use the keywords ON or OFF
+ *
+ * @see TSLPB_LED_t
+ */
 void TSLPB::setLED(TSLPB_LED_t led, bool state) {
     digitalWrite(led, state);
 }

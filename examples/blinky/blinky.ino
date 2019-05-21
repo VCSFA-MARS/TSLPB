@@ -1,4 +1,12 @@
-// #include "myDataPacketStructure.h"
+/*  ┌──────────────────────────────────────────────────┐
+ *  │  Twiggs Space Lab Payload Board Library Example  │
+ *  │												   │
+ *  │  This example demonstrates using the LED lights  │
+ *  │  on the TSLPB with the TSLPB::setLED() function  │
+ *  │												   │
+ *  │  LEDs are available on TSLPB V.F2 and onward     │
+ *  │												   │
+ *  └──────────────────────────────────────────────────┘ */
 
 /*  ┌──────────────────────────────────────────────────┐
  *  │  Include Twiggs Space Lab Payload Board Library  │

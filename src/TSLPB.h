@@ -79,7 +79,9 @@ typedef enum
     TempInt = 0b010,                ///< 0b010 (Temp Int)
     TempExt = 0b011,                ///< 0b011 (Temp Ext)
     Current = 0b100,                ///< 0b100 (Current)
-    Voltage = 0b101                 ///< 0b101 (Vcc)
+    Voltage = 0b101,                ///< 0b101 (Vcc)
+    Ground  = 0b110,                ///< 0b110 (V_gnd) available on V.F2
+    PPS     = 0b111                 ///< 0b111 (Pulses Per Second) available on V.F2
 } TSLPB_AnalogSensor_t;
 
 

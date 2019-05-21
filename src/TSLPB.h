@@ -47,11 +47,26 @@
 #define TSL_MUX_C 9                 ///< Mux C - TSLPB pin number
 #define TSL_MUX_RESPONSE_TIME 10    ///< 10 miliseconds to change
 
+#define TSL_LED_GREEN_PIN 10        ///< Pin for TSLPB.F2 M1 LED (Green)
+#define TSL_LED_RED_PIN 13          ///< Pin for TSLPB.F2 M2 LED (Red)
+
+#define ON 1                        ///< "ON" state for TSLPB LEDs
+#define OFF 0                       ///< "OFF" state for TSLPB LEDs
+
 #define TSL_SENSOR_READY_TIMEOUT 100    ///< number of milliseconds to wait for an I2C device to become ready
 
 
 
-
+/*!
+ * @brief TSLPB LED Selection Enum
+ */
+typedef enum name
+{
+    Green   = TSL_LED_GREEN_PIN,    ///< The M1 (Green) LED on TSLPB V.F2 
+    M1      = TSL_LED_GREEN_PIN,    ///< Pin M1 (Green) LED on TSLPB V.F2 
+    Red     = TSL_LED_RED_PIN,      ///< Pin M2 (Red) LED on TSLPB V.F2 
+    M2      = TSL_LED_RED_PIN       ///< Pin M2 (Red) LED on TSLPB V.F2 
+} TSLPB_LED_t;
 
 
 /*!
@@ -212,6 +227,8 @@ public:
     bool    isClearToSend();
     
     bool    isMagnetometerOverflow = false; ///< Overflow status of magnetometer registers
+
+    void    setLED(TSLPB_LED_t led, bool state);
     
 private:
     

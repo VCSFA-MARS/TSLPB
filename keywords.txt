@@ -35,6 +35,7 @@ getMemByte					KEYWORD2
 putMemByte					KEYWORD2
 readMemVar					KEYWORD2
 writeMemVar					KEYWORD2
+setLED						KEYWORD2
 
 ######################################
 # Constants (LITERAL1)
@@ -72,3 +73,14 @@ TempInt 					LITERAL1
 TempExt 					LITERAL1
 Current 					LITERAL1
 Voltage 					LITERAL1
+
+## LED Names (Enum) and States
+
+ON 							LITERAL1
+OFF 						LITERAL1
+M1 							LITERAL1
+M2 							LITERAL1
+Green 						LITERAL1
+Red 						LITERAL1
+
+

@@ -30,14 +30,16 @@ TSLPB::TSLPB() : NSLbus (TSL_NSL_BUS_RX_PIN, TSL_NSL_BUS_TX_PIN)
  *  }
  * @endcode
  *
- * @note This function changes the state of 4 I/O pins:
+ * @note This function changes the state of 6 I/O pins:
  * PIN                      | MODE
  * ------------             |-----
  * TSL_ADC                  | Analog Input
+ * TSL_NSL_BUS_STATUS_PIN   | Digital Input
  * TSL_MUX_A                | Digital Output
  * TSL_MUX_B                | Digital Output
  * TSL_MUX_C                | Digital Output
- * TSL_NSL_BUS_STATUS_PIN   | Digital Input
+ * TSL_LED_GREEN_PIN        | Digital Output V.F2 and later
+ * TSL_LED_RED_PIN          | Digital Output V.F2 and later
  */
 void TSLPB::begin() 
 {
@@ -45,6 +47,9 @@ void TSLPB::begin()
     InitTSLAnalogSensors();
     InitTSLDigitalSensors();
     pinMode(TSL_NSL_BUS_STATUS_PIN, INPUT);
+
+    pinMode(TSL_LED_RED_PIN, OUTPUT);       // V.F2 and later
+    pinMode(TSL_LED_GREEN_PIN, OUTPUT);     // V.F2 and later
 
     Serial.begin(TSL_DIAGNOSTIC_BAUD);
 
@@ -360,6 +365,13 @@ bool TSLPB::read16bitRegister(TSLPB_I2CAddress_t i2cAddress, const uint8_t reg, 
     response = (part1 << 8) | part2;
     return true;
 }
+
+
+void TSLPB::setLED(TSLPB_LED_t led, bool state) {
+    digitalWrite(led, state);
+}
+
+
 
 /*!
  * @brief This function places the TSLPB into a low power sleep mode until the

@@ -161,6 +161,8 @@ uint16_t TSLPB::readDigitalSensorRaw(TSLPB_DigitalSensor_t sensorName)
             isMagnetometerOverflow = (bool)((status & MAG_MASK_DATA_OVERFLOW) >> 3);
             
             return rawRegValue;
+            break;
+
         case Magnetometer_y:
             waitForMagReady();
             rawRegValue  =  read8bitRegister(MAG_ADDRESS, MPU9250_MAG_REG_Y_DATA_LSB);
@@ -171,6 +173,7 @@ uint16_t TSLPB::readDigitalSensorRaw(TSLPB_DigitalSensor_t sensorName)
             isMagnetometerOverflow = (bool)((status & MAG_MASK_DATA_OVERFLOW) >> 3);
             
             return rawRegValue;
+            break;
             
         case Magnetometer_z:
             waitForMagReady();
@@ -182,7 +185,7 @@ uint16_t TSLPB::readDigitalSensorRaw(TSLPB_DigitalSensor_t sensorName)
             isMagnetometerOverflow = (bool)((status & MAG_MASK_DATA_OVERFLOW) >> 3);
             
             return rawRegValue;
-            
+            break;        
             
         case IMU_Internal_Temp:
             break;
